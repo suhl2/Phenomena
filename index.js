@@ -12,6 +12,9 @@ server.use(morgan("dev"));
 server.use(bodyParser.json());
 server.use(cors());
 
+const apiRouter = require("./api");
+server.use('/api', apiRouter);
+
 server.use((req, res, next) => {
     res.status(404).send("Request failed with status code 404");
 });
@@ -26,11 +29,8 @@ server.listen(PORT, () => {
     client.connect();
   });
   
-  const apiRouter = require("./api");
-  server.use('/api', apiRouter);
+
 
 
 // Create custom error handling that sets the status code to 500
 // and returns the error as an object
-
-// On success, connect to the database
