@@ -1,5 +1,6 @@
 // Use the dotenv package, to create environment variables
 require('dotenv').config();
+const path = require("path"); 
 const PORT = process.env.PORT || 3000;
 const express = require('express');
 const morgan = require('morgan');
@@ -11,6 +12,12 @@ const { client } = require("./db");
 server.use(morgan("dev"));
 server.use(bodyParser.json());
 server.use(cors());
+
+server.use('/dist', express.static(path.join(__dirname, 'dist')));
+
+server.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 const apiRouter = require("./api");
 server.use('/api', apiRouter);
